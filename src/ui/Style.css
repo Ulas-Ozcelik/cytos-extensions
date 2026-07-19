@@ -1,0 +1,814 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+
+:root {
+    --cytos-highlight: #00d2ff;
+    --cytos-opacity: 0.85;
+}
+
+.cytos-container {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: 20px;
+    width: 520px;
+    height: 480px;
+    background: rgba(10, 10, 12, var(--cytos-opacity));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    color: #e0e0e0;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 210, 255, 0.05);
+    z-index: 99999;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    display: flex;
+    overflow: visible;
+}
+
+.cytos-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(40px) scale(0.92);
+}
+
+/* Sidebar Styling */
+.cytos-sidebar {
+    width: 56px;
+    background: rgba(0, 0, 0, 0.3);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 0;
+    gap: 12px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.cytos-tab-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cytos-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--cytos-highlight);
+}
+
+.cytos-tab-btn.active {
+    background: rgba(0, 210, 255, 0.1);
+    color: var(--cytos-highlight);
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.2);
+}
+
+/* Main Content Area */
+.cytos-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow: visible;
+}
+
+.cytos-header {
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 12px;
+}
+
+.cytos-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--cytos-highlight);
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
+}
+
+/* Scroll Area */
+.cytos-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.cytos-scroll::-webkit-scrollbar {
+    width: 3px;
+}
+
+.cytos-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* Player Items */
+.cytos-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.cytos-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 210, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.cytos-player-name {
+    font-size: 13px;
+    color: #fff;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cytos-player-name:hover {
+    filter: brightness(1.2);
+}
+
+/* Footer */
+.cytos-footer {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.3);
+    text-align: right;
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Tab Content Visibility */
+.cytos-tab-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.cytos-tab-content {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+.cytos-tab-content.active {
+    display: flex;
+}
+
+/* Stats Header (Top) */
+.cytos-stats-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.cytos-stat-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.cytos-stat-box:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+}
+
+.cytos-stat-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.cytos-stat-val {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cytos-highlight);
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-button:hover {
+    color: #ff4757;
+}
+
+/* Settings Tab Styling */
+.cytos-settings-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.cytos-settings-scroll::-webkit-scrollbar {
+    width: 3px;
+}
+
+.cytos-settings-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.cytos-settings-section {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.cytos-settings-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cytos-highlight);
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 6px;
+}
+
+.cytos-settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.cytos-settings-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.cytos-settings-info {
+    flex: 1;
+    padding-right: 16px;
+}
+
+.cytos-settings-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.cytos-settings-desc {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Switch / Toggle Styles */
+.cytos-switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.cytos-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.cytos-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cytos-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #fff;
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cytos-switch input:checked+.cytos-slider {
+    background-color: var(--cytos-highlight);
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+}
+
+.cytos-switch input:checked+.cytos-slider:before {
+    transform: translateX(18px);
+}
+
+/* Color Picker */
+.cytos-color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 34px;
+    height: 22px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.cytos-color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.cytos-color-picker::-webkit-color-swatch {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+}
+
+/* Slider / Range picker styles */
+.cytos-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cytos-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    cursor: pointer;
+}
+
+.cytos-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cytos-highlight);
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--cytos-highlight);
+    transition: transform 0.1s ease;
+}
+
+.cytos-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.cytos-range-val {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    width: 32px;
+    text-align: right;
+}
+
+.cytos-btn-settings {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s ease;
+}
+
+.cytos-btn-settings:hover {
+    color: var(--cytos-highlight);
+}
+
+.cytos-player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.cytos-player-skin {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.05);
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cytos-skins-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cytos-skins-container .cytos-player-skin {
+    position: relative;
+    z-index: 1;
+}
+
+.cytos-skins-container .cytos-player-skin:hover {
+    z-index: 2;
+    transform: scale(1.15);
+    border-color: var(--cytos-highlight);
+    box-shadow: 0 0 10px var(--cytos-highlight);
+}
+
+.cytos-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.cytos-multi-badge {
+    background: rgba(0, 210, 255, 0.15);
+    border: 1px solid rgba(0, 210, 255, 0.3);
+    color: var(--cytos-highlight);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-shadow: 0 0 4px rgba(0, 210, 255, 0.3);
+}
+
+.cytos-spectate-btn {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px;
+}
+
+.cytos-spectate-btn:hover {
+    color: var(--cytos-highlight);
+    transform: scale(1.15);
+    text-shadow: 0 0 8px var(--cytos-highlight);
+}
+
+/* Toast Notification Styles */
+.cytos-toast {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: rgba(10, 10, 12, 0.95);
+    border: 1px solid var(--cytos-highlight);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 210, 255, 0.2);
+    z-index: 1000000;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cytos-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Info Icon & Tooltip */
+.cytos-stat-box .cytos-info-container {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.cytos-info-icon {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cytos-info-container:hover .cytos-info-icon {
+    color: var(--cytos-highlight);
+    transform: scale(1.1);
+}
+
+.cytos-info-tooltip {
+    position: absolute;
+    top: -93px;
+    left: 67px;
+    width: 220px;
+    background: rgba(10, 10, 12, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 210, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.15);
+    z-index: 100000;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(10px) scale(0.95);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cytos-info-container:hover .cytos-info-tooltip {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+.cytos-tooltip-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cytos-highlight);
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.3);
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.cytos-tooltip-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-bottom: 8px;
+}
+
+.cytos-tooltip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 11px;
+}
+
+.cytos-tooltip-label {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.cytos-tooltip-val {
+    color: #ffffff;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+/* Portal Menu Styles */
+.cytos-portal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99990;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.cytos-portal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Unified Morphing Portal Container */
+.cytos-portal-container,
+.cytos-portal-container * {
+    box-sizing: border-box;
+}
+
+.cytos-portal-container {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 99991;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                height 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                background 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.4s ease;
+    background: rgba(10, 10, 12, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: none;
+    width: 480px;
+    height: 120px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cytos-portal-container.active {
+    pointer-events: all;
+}
+
+.cytos-portal-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+.cytos-portal-container.content-active {
+    background: rgba(10, 10, 12, var(--cytos-opacity));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(255, 255, 255, 0.08);
+    width: 520px;
+    height: 480px;
+    padding: 16px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 210, 255, 0.05);
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: visible;
+}
+
+/* Header & Close Button */
+.cytos-portal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cytos-portal-container.content-active .cytos-portal-header {
+    height: auto;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+/* Portal Icons */
+.cytos-portal-icons {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.cytos-portal-container.content-active .cytos-portal-icons {
+    gap: 16px;
+}
+
+.cytos-portal-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cytos-portal-container.content-active .cytos-portal-icon-wrapper {
+    flex-direction: row;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.cytos-portal-icon-wrapper i {
+    font-size: 56px;
+    opacity: 0;
+    transform: scale(0.5) translateY(50px);
+    filter: blur(6px);
+    transition: transform 0.2s ease, color 0.2s ease;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cytos-portal-container.content-active .cytos-portal-icon-wrapper i {
+    font-size: 16px;
+    opacity: 1;
+    transform: none;
+    filter: none;
+    text-shadow: none;
+}
+
+.cytos-portal-icon-label {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.cytos-portal-container.content-active .cytos-portal-icon-label {
+    margin-top: 0;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    opacity: 1;
+}
+
+.cytos-portal-icon-wrapper:hover {
+    color: var(--cytos-highlight);
+}
+
+.cytos-portal-icon-wrapper:hover i {
+    transform: scale(1.15) translateY(-5px);
+}
+
+.cytos-portal-container.content-active .cytos-portal-icon-wrapper:hover i {
+    transform: scale(1.1);
+}
+
+.cytos-portal-container.content-active .cytos-portal-icon-wrapper.active {
+    background: rgba(0, 210, 255, 0.1);
+    color: var(--cytos-highlight);
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.15);
+}
+
+/* Animations */
+.cytos-portal-container.active .cytos-portal-icon-wrapper i {
+    animation: cytosPortalIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.cytos-portal-container.active .cytos-portal-icon-wrapper:nth-child(1) i { animation-delay: 0.1s; }
+.cytos-portal-container.active .cytos-portal-icon-wrapper:nth-child(2) i { animation-delay: 0.2s; }
+.cytos-portal-container.active .cytos-portal-icon-wrapper:nth-child(3) i { animation-delay: 0.3s; }
+.cytos-portal-container.active .cytos-portal-icon-wrapper:nth-child(4) i { animation-delay: 0.4s; }
+
+@keyframes cytosPortalIn {
+    0%   { opacity: 0; transform: scale(0.5) translateY(50px); filter: blur(6px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.cytos-portal-container.closing {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.9);
+}
+
+/* Content Area */
+.cytos-portal-content-area {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+}
+
+.cytos-portal-container.content-active .cytos-portal-content-area {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    opacity: 1;
+    overflow: visible;
+}
